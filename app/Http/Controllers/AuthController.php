@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use app\http\Controllers\AuthController;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Order;
 
 class AuthController extends Controller
 {
