@@ -1,23 +1,24 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use app\http\Controllers\OrderController;
-use App\Models\Product;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\Customer;
 
 class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with('product')->get(); 
+        $orders = Order::with(['product', 'customer'])->get();
         return response()->json($orders, 200);
     }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
+            'customer_id' => 'required|exists:customers,id',
             'quantity' => 'required|integer|min:1',
         ]);
 
@@ -26,10 +27,10 @@ class OrderController extends Controller
 
         $order = Order::create([
             'product_id' => $validated['product_id'],
+            'customer_id' => $validated['customer_id'],
             'quantity' => $validated['quantity'],
             'total_price' => $total_price,
         ]);
-
 
         return response()->json($order, 201);
     }
@@ -38,6 +39,7 @@ class OrderController extends Controller
     {
         $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
+            'customer_id' => 'required|exists:customers,id',
             'quantity' => 'required|integer|min:1',
         ]);
 
@@ -47,18 +49,18 @@ class OrderController extends Controller
 
         $order->update([
             'product_id' => $validated['product_id'],
+            'customer_id' => $validated['customer_id'],
             'quantity' => $validated['quantity'],
             'total_price' => $total_price,
         ]);
 
         return response()->json($order);
     }
+
     public function destroy($id)
     {
         $order = Order::findOrFail($id);
         $order->delete();
-
         return response()->json(['message' => 'Order deleted successfully']);
     }
-
 }
