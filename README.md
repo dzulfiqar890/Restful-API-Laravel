@@ -1,7 +1,5 @@
-## CUSTOMER UPDATE
-1. Menambahkan Table Customer berupa minimal 5 kolom (Name, phone, addres, email, timestamps dan id)
-2. Authorization Table Customer (Menggunakan Token hasil login)
-3. Menghubungkan Table Customer ke Table Orders menggunakan customer_id 
+## SCRAMBLE UPDATE
+1. Menambahkan Scramble
 
 ## Teknologi
 CHAT GPT
